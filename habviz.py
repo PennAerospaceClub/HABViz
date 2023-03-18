@@ -15,16 +15,27 @@ y = ""
 z = ""
 c = ""
 
+def setX(selection):
+    global x
+    x = selection
+
+def setY(selection):
+    global y
+    y = selection
+
+def setZ(selection):
+    global z
+    z = selection
+
+def setC(selection):
+    global c
+    c = selection
+
 def UploadAction(event=None):
+    global data_path, axisOptions
     data_path = tk.filedialog.askopenfilename()
-    setupUI(data_path)
-
-def DemoAction(event=None):
-    data_path = './Data/Test Data Analysis.csv'
-    setupUI(data_path)
-
-def setupUI(data_path):
-    global axisOptions
+    
+    # clear axisOptions
     axisOptions = ["None"]
 
     # parse columns from csv
@@ -52,25 +63,9 @@ def setupUI(data_path):
     ttk.Label(config, text="Color-Axis", anchor="c").grid(column=0, row=4, columnspan=1, padx=0, pady=5, sticky = tk.W+tk.E)
     ttk.OptionMenu(config, cAxis, *axisOptions, command=setC).grid(column=1, row=4, columnspan=1, padx=15, pady=5, sticky = tk.W+tk.E)
 
-    ttk.Button(config, text="Visualize", command=lambda: visualize(data_path)).grid(column=0, row=5, columnspan=2, padx=15, pady=5, sticky = tk.W+tk.E)
+    ttk.Button(config, text="Visualize", command=visualize).grid(column=0, row=5, columnspan=2, padx=15, pady=5, sticky = tk.W+tk.E)
 
-def setX(selection):
-    global x
-    x = selection
-
-def setY(selection):
-    global y
-    y = selection
-
-def setZ(selection):
-    global z
-    z = selection
-
-def setC(selection):
-    global c
-    c = selection
-
-def visualize(data_path):
+def visualize(event=None):
     tracker(data_path, [x, y, z, c])
     
 
@@ -82,7 +77,7 @@ config.grid()
 
 # ttk.Label(config, text="HABViz").grid(column=0, row=0, columnspan=2, padx=15, pady=5, sticky = tk.W+tk.E)
 ttk.Button(config, text="Upload", command=lambda: UploadAction()).grid(column=0, row=0, columnspan=1, padx=15, pady=5, sticky = tk.W+tk.E)
-ttk.Button(config, text="Demo", command=lambda: DemoAction()).grid(column=1, row=0, columnspan=1, padx=15, pady=5, sticky = tk.W+tk.E)
+ttk.Button(config, text="Demo", command=root.destroy).grid(column=1, row=0, columnspan=1, padx=15, pady=5, sticky = tk.W+tk.E)
 
 
 
